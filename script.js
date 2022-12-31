@@ -20,11 +20,14 @@ function search(event) {
 }
 
 // Create button dynamically for each location in location array, set value, attribute and add class
-$.each(getLocationSearchHistory(), function (location) {
+$.each(getLocationSearchHistory(), function (position, location) {
   let locationBtn = $("<button>");
   locationBtn.text(location);
   locationBtn.attr("location", location);
+  //Add formatting to buttons so they look like mock up
   locationBtn.addClass("btn searchBtn col-md-1");
+  let historyDiv = $("#history");
+  historyDiv.append(locationBtn);
 });
 
 // function to get location searches
@@ -42,6 +45,7 @@ function getLocationSearchHistory() {
 // function to add locations to search history
 function setLocationSearchHistory(location) {
   let storedLocationSearchHistory = getLocationSearchHistory();
+  // Add if logic to exclude entries that aren't cities or cities that have already been entered
   storedLocationSearchHistory.push(location);
   localStorage.setItem(
     "locationArrayKey",
