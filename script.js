@@ -3,14 +3,49 @@ let cityEl = $("#search-input");
 let searchBtn = $("#search-button");
 searchBtn.on("click", search);
 let city = cityEl.value;
+// Need to convert city name into lat and lon value to make API call, and then pass lat and lon into base URL
+let today = moment().format("l");
+console.log(today);
+let lat = 52.68064;
+let lon = -1.8243991722405983;
 
-let queryURL =
-  "http://api.openweathermap.org/data/2.5/weather?q=" +
-  city +
-  "&appid=" +
-  APIKey;
+// Base URL for current weather - not working at moment
+let queryURL = `http://api.openweathermap.org/data/2.5/weather?q=
+  Lichfield,&appid=
+  ${APIKey}`;
 
-// fetch(queryURL);
+$.ajax({
+  url: queryURL,
+  method: "GET",
+}).then(function (response) {
+  console.log(response);
+});
+
+// The base URL for your API calls should look like the following:
+let forecastURL = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${APIKey}`;
+
+$.ajax({
+  url: forecastURL,
+  method: "GET",
+}).then(function (response) {
+  console.log(response);
+});
+
+//Direct geocoding
+
+let locationCoords = `https://api.openweathermap.org/geo/1.0/direct?q=Lichfield,GB&appid=${APIKey}`;
+
+$.ajax({
+  url: locationCoords,
+  method: "GET",
+}).then(function (response) {
+  console.log(response);
+  // Set up a function which makes the API call.  Set up function which displays content from API call dynamically.
+  // weather.icon //weather icon
+  // main.temp //temperature
+  //wind.speed //wind speed
+  // main.humidity //humidity
+});
 
 function search(event) {
   event.preventDefault();
@@ -24,10 +59,11 @@ $.each(getLocationSearchHistory(), function (position, location) {
   let locationBtn = $("<button>");
   locationBtn.text(location);
   locationBtn.attr("location", location);
-  //Add formatting to buttons so they look like mock up
-  locationBtn.addClass("btn searchBtn col-md-1");
+  //Add formatting to buttons so they look like mock up.  Added bootstrap format but need to add padding
+  locationBtn.addClass("btn btn-primary");
   let historyDiv = $("#history");
   historyDiv.append(locationBtn);
+  //   locationBtn.on("click", displayWeatherData);
 });
 
 // function to get location searches
@@ -54,13 +90,6 @@ function setLocationSearchHistory(location) {
 }
 
 // Set up search history cities as array in local storage.  Create button element for each city shown and add event listener which displays 5 day forecast for that city.
-
-// Set up a function which makes the API call.  Set up function which displays content from API call dynamically.
-
-// weather.icon //weather icon
-// main.temp //temperature
-//wind.speed //wind speed
-// main.humidity //humidity
 
 // URL to make current weather API call
 //https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={API key}
