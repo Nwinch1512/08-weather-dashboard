@@ -9,19 +9,31 @@ console.log(today);
 let lat = 52.68064;
 let lon = -1.8243991722405983;
 
-// Base URL for current weather - not working at moment
-let queryURL = `http://api.openweathermap.org/data/2.5/weather?q=
-  Lichfield,&appid=
-  ${APIKey}`;
+// Base URL for current weather forecast
+let queryURL = `http://api.openweathermap.org/data/2.5/weather?q=Lichfield&appid=${APIKey}`;
 
 $.ajax({
   url: queryURL,
   method: "GET",
 }).then(function (response) {
   console.log(response);
+  // Converting temp from kelvine to degrees celsius
+  let tempInCelsius = Math.trunc(response.main.temp - 273.15);
+  console.log(
+    `You are in ${response.name}, the temperature is ${tempInCelsius} degrees celsius`
+  );
+  // weather.icon //weather icon.  Find out how to get icon to display - may need to use font awesome??
+  let icon = response.weather.icon;
+  // main.temp //temperature
+  let temp = response.main.temp;
+  //wind.speed //wind speed
+  let windSpeed = response.wind.speed;
+  // main.humidity //humidity
+  let humidity = response.main.humidity;
+  console.log(icon, temp, windSpeed, humidity);
 });
 
-// The base URL for your API calls should look like the following:
+// Base URL for future weather forecast
 let forecastURL = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${APIKey}`;
 
 $.ajax({
@@ -29,6 +41,7 @@ $.ajax({
   method: "GET",
 }).then(function (response) {
   console.log(response);
+  // Set up a function which makes the API call.  Set up function which displays content from API call dynamically.
 });
 
 //Direct geocoding
@@ -40,15 +53,11 @@ $.ajax({
   method: "GET",
 }).then(function (response) {
   console.log(response);
-  // Set up a function which makes the API call.  Set up function which displays content from API call dynamically.
-  // weather.icon //weather icon
-  // main.temp //temperature
-  //wind.speed //wind speed
-  // main.humidity //humidity
 });
 
 function search(event) {
   event.preventDefault();
+  // Need to add user validation code here to ensure entries are not empty strings or duplicates and that they're proper city names
   let city = cityEl.val();
   console.log(city);
   setLocationSearchHistory(city);
