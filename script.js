@@ -1,15 +1,19 @@
 let APIKey = "800568ca8ac1381d6a664d50c4c201ee";
+
+// Bringing in existing HTML elements
 let cityEl = $("#search-input");
 let searchBtn = $("#search-button");
+let todayForecastSec = $("#today");
+let futureForecastSec = $("#forecast");
 searchBtn.on("click", search);
-let city = cityEl.value;
-// Need to convert city name into lat and lon value to make API call, and then pass lat and lon into base URL
-let today = moment().format("l");
-console.log(today);
+let city = cityEl.val();
+// Need to convert city name into lat and lon value to make API call, and then pass lat and lon into base URL to get 5 day forecast
+
+// Hardcoded lat and lon for now but need to get this from API call response depending on user input
 let lat = 52.68064;
 let lon = -1.8243991722405983;
 
-// Base URL for current weather forecast
+// Base URL for current weather forecast - hardcoded city for now but need to set based on user input
 let queryURL = `http://api.openweathermap.org/data/2.5/weather?q=Lichfield&appid=${APIKey}`;
 
 $.ajax({
@@ -22,15 +26,32 @@ $.ajax({
   console.log(
     `You are in ${response.name}, the temperature is ${tempInCelsius} degrees celsius`
   );
+  // Setting up elements for current weather forecast
+  let todayForecastDiv = $("<div>");
+  let headerEl = $("<h1>");
+  let weatherListEl = $("<ul>");
+
+  let cityName = response.name;
+  let date = moment.unix(response.dt).format("DD/MM/yyyy");
+  console.log(date);
+
   // weather.icon //weather icon.  Find out how to get icon to display - may need to use font awesome??
   let icon = response.weather.icon;
   // main.temp //temperature
   let temp = response.main.temp;
   //wind.speed //wind speed
-  let windSpeed = response.wind.speed;
   // main.humidity //humidity
   let humidity = response.main.humidity;
-  console.log(icon, temp, windSpeed, humidity);
+  let windSpeed = response.wind.speed;
+
+  console.log(
+    "city name:" + cityName,
+    "\n" + "date:" + date,
+    "\n" + "icon:" + icon,
+    "\n" + "temp:" + tempInCelsius + "℃",
+    "\n" + "humidity:" + humidity + "%",
+    "\n" + "wind-speed:" + windSpeed + " KPH"
+  );
 });
 
 // Base URL for future weather forecast
@@ -42,6 +63,7 @@ $.ajax({
 }).then(function (response) {
   console.log(response);
   // Set up a function which makes the API call.  Set up function which displays content from API call dynamically.
+  // bootstrap syntax <div class="container"></div>;
 });
 
 //Direct geocoding
