@@ -179,18 +179,41 @@ function displayFutureForecast() {
     getForecast(lat, lon);
   });
 
+  // Set ajax call for future forecast
   function getForecast(lat, lon) {
-    // Set ajax call for future forecast
     let forecastURL = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${APIKey}`;
     $.ajax({
       url: forecastURL,
       method: "GET",
     }).then(function (response) {
       console.log(response);
+      let heading = $("<h3>").text("5-Day Forecast:");
+      futureForecastSec.append(heading);
+      for (let i = 0; i < 5; i++) {
+        let day = $("<div>")
+          .addClass("day")
+          .attr("id", `day-${[i]}`);
+        let dateEl = $("<h4>").attr("id", `date-${[i]}`);
+        let weatherImg = $("<img>").attr("id", `img-day-${[i]}`);
+        let weatherListEl = $("<ul>").attr("id", `weather-list-${[i]}`);
+        futureForecastSec.append(day);
+        day.append(dateEl);
+        day.append(weatherImg);
+        day.append(weatherListEl);
+        let tempEl = $("<li>").attr("id", `temp-${[i]}`);
+        let windEl = $("<li>").attr("id", `wind-${[i]}`);
+        let humidityEl = $("<li>").attr("id", `humidity-${[i]}`);
+        weatherListEl.append(tempEl, windEl, humidityEl);
+      }
+      // let day2 = $("<div>").attr("id", "day-2");
+      // let day3 = $("<div>").attr("id", "day-3");
+      // let day4 = $("<div>").attr("id", "day-4");
+      // let day5 = $("<div>").attr("id", "day-5");
     });
   }
 }
 
+// Need to update location for current weather when button clicked
 $(document).on("click", ".location-btn", displayFutureForecast);
 
 // Set up search history cities as array in local storage.  Create button element for each city shown and add event listener which displays 5 day forecast for that city.
