@@ -1,3 +1,5 @@
+// $( document ).ready(function() {}
+
 let APIKey = "800568ca8ac1381d6a664d50c4c201ee";
 
 // Bringing in existing HTML elements
@@ -29,14 +31,30 @@ $.ajax({
   // Setting up elements for current weather forecast
   let todayForecastDiv = $("<div>");
   let headerEl = $("<h1>");
+  let weatherImg = $("<img>");
   let weatherListEl = $("<ul>");
 
+  //Appending elements for current weather forecast
+  todayForecastSec.append(todayForecastDiv);
+  todayForecastDiv.append(headerEl);
+  todayForecastDiv.append(weatherListEl);
+  headerEl.append(weatherImg);
+
+  //Heading for current weather
   let cityName = response.name;
   let date = moment.unix(response.dt).format("DD/MM/yyyy");
-  console.log(date);
+  let imageURL = `http://openweathermap.org/img/w/${response.weather[0].icon}.png`;
+  console.log(imageURL);
+  //Setting value for new HTML elements
+  weatherImg.attr("src", imageURL);
+
+  headerEl.text(cityName + " " + "(" + date + ")");
+  headerEl.append(weatherImg);
+  console.log(weatherImg);
 
   // weather.icon //weather icon.  Find out how to get icon to display - may need to use font awesome??
-  let icon = response.weather.icon;
+  // CODE THAT MIGHT HELP: $("#weather_image").attr("src", "http://openweathermap.org/img/w/" + json.weather[0].icon + ".png");
+  let weatherIcon = response.weather[0].icon;
   // main.temp //temperature
   let temp = response.main.temp;
   //wind.speed //wind speed
@@ -47,7 +65,7 @@ $.ajax({
   console.log(
     "city name:" + cityName,
     "\n" + "date:" + date,
-    "\n" + "icon:" + icon,
+    // "\n" + "icon:" + icon,
     "\n" + "temp:" + tempInCelsius + "℃",
     "\n" + "humidity:" + humidity + "%",
     "\n" + "wind-speed:" + windSpeed + " KPH"
@@ -66,7 +84,7 @@ $.ajax({
   // bootstrap syntax <div class="container"></div>;
 });
 
-//Direct geocoding
+//Direct geocoding.  Hardcorded city but need to change so taking from user input
 
 let locationCoords = `https://api.openweathermap.org/geo/1.0/direct?q=Lichfield,GB&appid=${APIKey}`;
 
