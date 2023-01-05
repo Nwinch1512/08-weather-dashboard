@@ -30,9 +30,11 @@ $.ajax({
   );
   // Setting up elements for current weather forecast
   let todayForecastDiv = $("<div>");
+  todayForecastDiv.attr("id", "today-forecast-div");
   let headerEl = $("<h1>");
   let weatherImg = $("<img>");
   let weatherListEl = $("<ul>");
+  weatherListEl.addClass("weather-list-items");
 
   //Appending elements for current weather forecast
   todayForecastSec.append(todayForecastDiv);
@@ -47,13 +49,9 @@ $.ajax({
   console.log(imageURL);
   //Setting value for new HTML elements
   weatherImg.attr("src", imageURL);
-
   headerEl.text(cityName + " " + "(" + date + ")");
   headerEl.append(weatherImg);
-  console.log(weatherImg);
 
-  // weather.icon //weather icon.  Find out how to get icon to display - may need to use font awesome??
-  // CODE THAT MIGHT HELP: $("#weather_image").attr("src", "http://openweathermap.org/img/w/" + json.weather[0].icon + ".png");
   let weatherIcon = response.weather[0].icon;
   // main.temp //temperature
   let temp = response.main.temp;
@@ -61,6 +59,11 @@ $.ajax({
   // main.humidity //humidity
   let humidity = response.main.humidity;
   let windSpeed = response.wind.speed;
+
+  let tempLi = $("<li>").addClass("current-weather-item");
+  let windLi = $("<li>").addClass("current-weather-item");
+  let humdityLi = $("<li>").addClass("current-weather-item");
+  weatherListEl.append(tempLi, windLi, humdityLi);
 
   console.log(
     "city name:" + cityName,

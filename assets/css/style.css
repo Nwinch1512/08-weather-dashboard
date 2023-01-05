@@ -1,0 +1,8 @@
+/* Removing bullets from ul */
+.weather-list-items {
+  list-style: none;
+}
+
+#today-forecast-div {
+  border: 1px solid black;
+}
