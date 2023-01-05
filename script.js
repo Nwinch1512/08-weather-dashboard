@@ -94,15 +94,30 @@ $.ajax({
 });
 
 //Direct geocoding.  Hardcorded city but need to change so taking from user input
+// function getLatitude(location) {
+//   let locationCoords = `https://api.openweathermap.org/geo/1.0/direct?q=${location},GB&appid=${APIKey}`;
 
-let locationCoords = `https://api.openweathermap.org/geo/1.0/direct?q=Lichfield,GB&appid=${APIKey}`;
+//   $.ajax({
+//     url: locationCoords,
+//     method: "GET",
+//   }).then(function (response) {
+//     console.log(response);
+//     let lat = response[0].lat;
+//     console.log(lat);
+//   });
+// }
 
-$.ajax({
-  url: locationCoords,
-  method: "GET",
-}).then(function (response) {
-  console.log(response);
-});
+// function getLongitude(location) {
+//   let locationCoords = `https://api.openweathermap.org/geo/1.0/direct?q=${location},GB&appid=${APIKey}`;
+
+//   $.ajax({
+//     url: locationCoords,
+//     method: "GET",
+//   }).then(function (response) {
+//     console.log(response);
+//     console.log(response[0].lon);
+//   });
+// }
 
 function search(event) {
   event.preventDefault();
@@ -117,8 +132,9 @@ $.each(getLocationSearchHistory(), function (position, location) {
   let locationBtn = $("<button>");
   locationBtn.text(location);
   locationBtn.attr("location", location);
+  locationBtn.attr("data-name", location);
   //Add formatting to buttons so they look like mock up.  Added bootstrap format but need to add padding
-  locationBtn.addClass("btn btn-primary");
+  locationBtn.addClass("btn btn-primary location-btn");
   let historyDiv = $("#history");
   historyDiv.append(locationBtn);
   //   locationBtn.on("click", displayWeatherData);
@@ -146,6 +162,36 @@ function setLocationSearchHistory(location) {
     JSON.stringify(storedLocationSearchHistory)
   );
 }
+
+function displayFutureForecast() {
+  const locationTitle = $(this).attr("data-name");
+  console.log(locationTitle);
+
+  let locationCoords = `https://api.openweathermap.org/geo/1.0/direct?q=${locationTitle},GB&appid=${APIKey}`;
+
+  $.ajax({
+    url: locationCoords,
+    method: "GET",
+  }).then(function (response) {
+    console.log(response);
+    let lat = response[0].lat;
+    let lon = response[0].lon;
+    getForecast(lat, lon);
+  });
+
+  function getForecast(lat, lon) {
+    // Set ajax call for future forecast
+    let forecastURL = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${APIKey}`;
+    $.ajax({
+      url: forecastURL,
+      method: "GET",
+    }).then(function (response) {
+      console.log(response);
+    });
+  }
+}
+
+$(document).on("click", ".location-btn", displayFutureForecast);
 
 // Set up search history cities as array in local storage.  Create button element for each city shown and add event listener which displays 5 day forecast for that city.
 
