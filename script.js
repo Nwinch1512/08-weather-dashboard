@@ -188,7 +188,9 @@ function displayFutureForecast() {
       method: "GET",
     }).then(function (response) {
       console.log(response);
-      let heading = $("<h3>").text("5-Day Forecast:");
+      let heading = $("<h3>")
+        .text("5-Day Forecast:")
+        .addClass("forecast-heading");
       futureForecastSec.append(heading);
       for (let i = 0; i < 5; i++) {
         let day = $("<div>")
@@ -204,7 +206,9 @@ function displayFutureForecast() {
           .text(date);
         let weatherImg = $("<img>").attr("id", `img-day-${[i]}`);
         let weatherListEl = $("<ul>").attr("id", `weather-list-${[i]}`);
+        weatherListEl.addClass("weather-list-items");
         futureForecastSec.append(day);
+
         day.append(dateEl);
         day.append(weatherImg);
         day.append(weatherListEl);

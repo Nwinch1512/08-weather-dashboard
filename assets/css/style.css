@@ -6,3 +6,7 @@
 #today-forecast-div {
   border: 1px solid black;
 }
+
+.forecast-heading {
+  display: block;
+}
