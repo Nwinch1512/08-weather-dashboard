@@ -60,9 +60,15 @@ $.ajax({
   let humidity = response.main.humidity;
   let windSpeed = response.wind.speed;
 
-  let tempLi = $("<li>").addClass("current-weather-item");
-  let windLi = $("<li>").addClass("current-weather-item");
-  let humdityLi = $("<li>").addClass("current-weather-item");
+  let tempLi = $("<li>")
+    .addClass("current-weather-item")
+    .text(`Temp: ${temp} ℃`);
+  let windLi = $("<li>")
+    .addClass("current-weather-item")
+    .text(`Wind: ${windSpeed} KPH`);
+  let humdityLi = $("<li>")
+    .addClass("current-weather-item")
+    .text(`Humidity: ${humidity}%`);
   weatherListEl.append(tempLi, windLi, humdityLi);
 
   console.log(
