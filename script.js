@@ -24,7 +24,7 @@ $.ajax({
 }).then(function (response) {
   console.log(response);
   // Converting temp from kelvine to degrees celsius
-  let tempInCelsius = Math.trunc(response.main.temp - 273.15);
+  let tempInCelsius = (response.main.temp - 273.15).toFixed(2);
   console.log(
     `You are in ${response.name}, the temperature is ${tempInCelsius} degrees celsius`
   );
@@ -62,7 +62,7 @@ $.ajax({
 
   let tempLi = $("<li>")
     .addClass("current-weather-item")
-    .text(`Temp: ${temp} ℃`);
+    .text(`Temp: ${tempInCelsius} ℃`);
   let windLi = $("<li>")
     .addClass("current-weather-item")
     .text(`Wind: ${windSpeed} KPH`);
@@ -182,6 +182,7 @@ function displayFutureForecast() {
   // Set ajax call for future forecast
   function getForecast(lat, lon) {
     let forecastURL = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${APIKey}`;
+    console.log(forecastURL);
     $.ajax({
       url: forecastURL,
       method: "GET",
@@ -193,14 +194,26 @@ function displayFutureForecast() {
         let day = $("<div>")
           .addClass("day")
           .attr("id", `day-${[i]}`);
-        let dateEl = $("<h4>").attr("id", `date-${[i]}`);
+        let dateArrayIndex = +([i] * 8 + 4);
+        console.log(dateArrayIndex);
+        let date = moment
+          .unix(response.list[dateArrayIndex].dt)
+          .format("DD/MM/yyyy");
+        let dateEl = $("<h4>")
+          .attr("id", `date-${[i]}`)
+          .text(date);
         let weatherImg = $("<img>").attr("id", `img-day-${[i]}`);
         let weatherListEl = $("<ul>").attr("id", `weather-list-${[i]}`);
         futureForecastSec.append(day);
         day.append(dateEl);
         day.append(weatherImg);
         day.append(weatherListEl);
-        let tempEl = $("<li>").attr("id", `temp-${[i]}`);
+        let tempInCelsius = (
+          response.list[dateArrayIndex].main.temp - 273.15
+        ).toFixed(2);
+        let tempEl = $("<li>")
+          .attr("id", `temp-${[i]}`)
+          .text(`Temp: ${tempInCelsius} ℃`);
         let windEl = $("<li>").attr("id", `wind-${[i]}`);
         let humidityEl = $("<li>").attr("id", `humidity-${[i]}`);
         weatherListEl.append(tempEl, windEl, humidityEl);
