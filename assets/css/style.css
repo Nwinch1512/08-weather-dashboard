@@ -1,6 +1,8 @@
 /* Removing bullets from ul */
 .weather-list-items {
   list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
 #today-forecast-div {
@@ -9,4 +11,15 @@
 
 .forecast-heading {
   display: block;
+}
+
+.day-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.day {
+  padding: 20px;
+  background-color: rgb(12, 12, 60);
+  color: white;
 }
