@@ -16,11 +16,11 @@ let lat = 52.68064;
 let lon = -1.8243991722405983;
 
 // Base URL for current weather forecast - hardcoded city for now but need to set based on user input
-function displayCurrentForecast() {
+function displayCurrentForecast(city) {
   $("#today").empty();
-  const locationTitleCurrent = $(this).attr("data-name");
-  console.log(locationTitleCurrent);
-  let queryURL = `http://api.openweathermap.org/data/2.5/weather?q=${locationTitleCurrent}&appid=${APIKey}`;
+  // const locationTitleCurrent = $(event.target).attr("data-name");
+  // console.log(locationTitleCurrent);
+  let queryURL = `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${APIKey}`;
 
   $.ajax({
     url: queryURL,
@@ -101,22 +101,30 @@ function search(event) {
   event.preventDefault();
   // Need to add user validation code here to ensure entries are not empty strings or duplicates and that they're proper city names
   let city = cityEl.val();
+  // Call method to validate city - get lat lon to check valid city
   console.log(city);
   setLocationSearchHistory(city);
+  displaySearchHistory();
+  displayFutureForecast(city);
+  displayCurrentForecast(city);
 }
 
 // Create button dynamically for each location in location array, set value, attribute and add class
-$.each(getLocationSearchHistory(), function (position, location) {
-  let locationBtn = $("<button>");
-  locationBtn.text(location);
-  locationBtn.attr("location", location);
-  locationBtn.attr("data-name", location);
-  //Add formatting to buttons so they look like mock up.  Added bootstrap format but need to add padding
-  locationBtn.addClass("btn btn-primary location-btn");
+function displaySearchHistory() {
   let historyDiv = $("#history");
-  historyDiv.append(locationBtn);
-  //   locationBtn.on("click", displayWeatherData);
-});
+  historyDiv.empty();
+  $.each(getLocationSearchHistory(), function (position, location) {
+    let locationBtn = $("<button>");
+    locationBtn.text(location);
+    locationBtn.attr("location", location);
+    locationBtn.attr("data-name", location);
+    //Add formatting to buttons so they look like mock up.  Added bootstrap format but need to add padding
+    locationBtn.addClass("btn btn-primary location-btn");
+
+    historyDiv.append(locationBtn);
+    //   locationBtn.on("click", displayWeatherData);
+  });
+}
 
 // function to get location searches
 function getLocationSearchHistory() {
@@ -134,18 +142,18 @@ function getLocationSearchHistory() {
 function setLocationSearchHistory(location) {
   let storedLocationSearchHistory = getLocationSearchHistory();
   // Add if logic to exclude entries that aren't cities or cities that have already been entered
-  storedLocationSearchHistory.push(location);
+  storedLocationSearchHistory.unshift(location);
   localStorage.setItem(
     "locationArrayKey",
     JSON.stringify(storedLocationSearchHistory)
   );
 }
 
-function displayFutureForecast() {
+function displayFutureForecast(city) {
   $("#forecast").empty();
-  const locationTitle = $(this).attr("data-name");
-  console.log(locationTitle);
-  let locationCoords = `https://api.openweathermap.org/geo/1.0/direct?q=${locationTitle},GB&appid=${APIKey}`;
+  // const locationTitle = $(event.target).attr("data-name");
+  // console.log(locationTitle);
+  let locationCoords = `https://api.openweathermap.org/geo/1.0/direct?q=${city},GB&appid=${APIKey}`;
 
   $.ajax({
     url: locationCoords,
@@ -214,13 +222,17 @@ function displayFutureForecast() {
 }
 
 // Need to update location for current weather when button clicked
-$(document).on("click", ".location-btn", displayCurrentForecast);
-$(document).on("click", ".location-btn", displayFutureForecast);
+$(document).on("click", ".location-btn", updateForecasts);
 
-// function updateForecasts(event) {
-//   displayFutureForecast(), displayCurrentForecast();
-// }
+function updateForecasts(event) {
+  const city = $(event.target).attr("data-name");
+  console.log(city);
+  cityEl.val(city);
+  displayFutureForecast(city);
+  displayCurrentForecast(city);
+}
 
+displaySearchHistory();
 // Set up search history cities as array in local storage.  Create button element for each city shown and add event listener which displays 5 day forecast for that city.
 
 // URL to make current weather API call
