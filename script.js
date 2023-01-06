@@ -207,7 +207,7 @@ function displayFutureForecast(city) {
       futureForecastSec.append(dayContainer);
       for (let i = 0; i < 5; i++) {
         let day = $("<div>")
-          .addClass("day")
+          .addClass("day card")
           .attr("id", `day-${[i]}`);
         let dateArrayIndex = +([i] * 8 + 4);
         let date = moment
