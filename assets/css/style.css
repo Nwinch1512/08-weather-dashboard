@@ -21,7 +21,7 @@
 
 .day {
   padding: 20px;
-  background-color: rgb(12, 12, 60);
+  background-color: rgba(3, 22, 31, 0.585);
   color: white;
 }
 
@@ -37,4 +37,18 @@
   background-color: grey;
   border-color: grey;
   color: black;
+}
+
+.weather-header {
+  background-color: rgb(45, 81, 198);
+  background-image: linear-gradient(
+    to right,
+    rgb(71, 92, 228),
+    rgb(4, 5, 88)
+  ) !important;
+}
+
+#history {
+  border-top: 1px solid grey;
+  padding-top: 20px;
 }

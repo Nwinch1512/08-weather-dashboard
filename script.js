@@ -36,7 +36,7 @@ function displayCurrentForecast(city) {
     // Setting up elements for current weather forecast
     let todayForecastDiv = $("<div>");
     todayForecastDiv.attr("id", "today-forecast-div");
-    let headerEl = $("<h1>");
+    let headerEl = $("<h2>");
     let weatherImg = $("<img>");
     let weatherListEl = $("<ul>");
     weatherListEl.addClass("weather-list-items");
