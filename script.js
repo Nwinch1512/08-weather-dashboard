@@ -138,9 +138,9 @@ function setLocationSearchHistory(location) {
 }
 
 function displayFutureForecast() {
+  $("#forecast").empty();
   const locationTitle = $(this).attr("data-name");
   console.log(locationTitle);
-
   let locationCoords = `https://api.openweathermap.org/geo/1.0/direct?q=${locationTitle},GB&appid=${APIKey}`;
 
   $.ajax({
@@ -205,10 +205,6 @@ function displayFutureForecast() {
           .text(`Humidity: ${response.list[dateArrayIndex].main.humidity}%`);
         weatherListEl.append(tempEl, windEl, humidityEl);
       }
-      // let day2 = $("<div>").attr("id", "day-2");
-      // let day3 = $("<div>").attr("id", "day-3");
-      // let day4 = $("<div>").attr("id", "day-4");
-      // let day5 = $("<div>").attr("id", "day-5");
     });
   }
 }
