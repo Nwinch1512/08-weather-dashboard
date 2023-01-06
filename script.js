@@ -8,6 +8,7 @@ let searchBtn = $("#search-button");
 let todayForecastSec = $("#today");
 let futureForecastSec = $("#forecast");
 searchBtn.on("click", search);
+searchBtn.addClass("btn btn-primary search-btn");
 let city = cityEl.val().trim();
 // Need to convert city name into lat and lon value to make API call, and then pass lat and lon into base URL to get 5 day forecast
 

@@ -28,3 +28,13 @@
 .location-btn {
   margin: 5px;
 }
+
+.forecast-heading {
+  padding: 20px;
+}
+
+.location-btn {
+  background-color: grey;
+  border-color: grey;
+  color: black;
+}
