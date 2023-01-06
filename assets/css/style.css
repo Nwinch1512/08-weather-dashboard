@@ -7,6 +7,7 @@
 
 #today-forecast-div {
   border: 1px solid black;
+  padding: 20px;
 }
 
 .forecast-heading {

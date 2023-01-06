@@ -89,35 +89,9 @@ $.ajax({
   method: "GET",
 }).then(function (response) {
   console.log(response);
-  // Set up a function which makes the API call.  Set up function which displays content from API call dynamically.
+
   // bootstrap syntax <div class="container"></div>;
 });
-
-//Direct geocoding.  Hardcorded city but need to change so taking from user input
-// function getLatitude(location) {
-//   let locationCoords = `https://api.openweathermap.org/geo/1.0/direct?q=${location},GB&appid=${APIKey}`;
-
-//   $.ajax({
-//     url: locationCoords,
-//     method: "GET",
-//   }).then(function (response) {
-//     console.log(response);
-//     let lat = response[0].lat;
-//     console.log(lat);
-//   });
-// }
-
-// function getLongitude(location) {
-//   let locationCoords = `https://api.openweathermap.org/geo/1.0/direct?q=${location},GB&appid=${APIKey}`;
-
-//   $.ajax({
-//     url: locationCoords,
-//     method: "GET",
-//   }).then(function (response) {
-//     console.log(response);
-//     console.log(response[0].lon);
-//   });
-// }
 
 function search(event) {
   event.preventDefault();
@@ -208,6 +182,8 @@ function displayFutureForecast() {
           .attr("id", `date-${[i]}`)
           .text(date);
         let weatherImg = $("<img>").attr("id", `img-day-${[i]}`);
+        let forecastImageURL = `http://openweathermap.org/img/w/${response.list[dateArrayIndex].weather[0].icon}.png`;
+        weatherImg.attr("src", forecastImageURL);
         let weatherListEl = $("<ul>").attr("id", `weather-list-${[i]}`);
         weatherListEl.addClass("weather-list-items");
         dayContainer.append(day);
