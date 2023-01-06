@@ -94,20 +94,54 @@ function search(event) {
   let city = cityEl.val();
   console.log(city);
 
-  // Call method to validate city - get lat lon to check valid city
-  if (isCityValid(city)) {
-    setLocationSearchHistory(city);
-    displaySearchHistory();
-    displayFutureForecast(city);
-    displayCurrentForecast(city);
-  } else {
-    //Tell user it's not valid
-  }
+  let locationCoords = `https://api.openweathermap.org/geo/1.0/direct?q=${city},GB&appid=${APIKey}`;
+  // Running ajax call to check that city entered is valid
+  $.ajax({
+    url: locationCoords,
+    method: "GET",
+  }).then(function (response) {
+    let responseLength = response.length;
+    if (responseLength > 0) {
+      setLocationSearchHistory(city);
+      displaySearchHistory();
+      displayFutureForecast(city);
+      displayCurrentForecast(city);
+    } else {
+      alert("Please enter a valid city name.");
+    }
+  });
 }
 
 function isCityValid(city) {
-  // is it not null or empty and is there a lat, lon? Return true or false
+  let locationCoords = `https://api.openweathermap.org/geo/1.0/direct?q=${city},GB&appid=${APIKey}`;
+
+  $.ajax({
+    url: locationCoords,
+    method: "GET",
+  }).then(function (response) {
+    let responseLength = response.length;
+    if (responseLength > 0) {
+      console.log("it's a city");
+      return true;
+    } else {
+      console.log("it's not a city");
+      return false;
+    }
+  });
 }
+
+// function isCityValid(city) {
+//   // is it not null or empty and is there a lat, lon? Return true or false
+//   // if (city !== "" && city !== null && lat && lon) {
+//   // if (lat && lon) {
+//   //   console.log(true);
+//   //   return true;
+//   // } else {
+//   //   console.log(false);
+//   //   return false;
+//   // }
+//   console.log(getCoords(city));
+// }
 
 // Create button dynamically for each location in location array, set value, attribute and add class
 function displaySearchHistory() {
