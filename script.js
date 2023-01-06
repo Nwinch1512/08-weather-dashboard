@@ -12,8 +12,8 @@ let city = cityEl.val().trim();
 // Need to convert city name into lat and lon value to make API call, and then pass lat and lon into base URL to get 5 day forecast
 
 // Hardcoded lat and lon for now but need to get this from API call response depending on user input
-let lat = 52.68064;
-let lon = -1.8243991722405983;
+// let lat = 52.68064;
+// let lon = -1.8243991722405983;
 
 // Base URL for current weather forecast - hardcoded city for now but need to set based on user input
 function displayCurrentForecast(city) {
@@ -50,7 +50,6 @@ function displayCurrentForecast(city) {
     let cityName = response.name;
     let date = moment.unix(response.dt).format("DD/MM/yyyy");
     let imageURL = `http://openweathermap.org/img/w/${response.weather[0].icon}.png`;
-    console.log(imageURL);
     //Setting value for new HTML elements
     weatherImg.attr("src", imageURL);
     headerEl.text(cityName + " " + "(" + date + ")");
@@ -85,28 +84,28 @@ function displayCurrentForecast(city) {
     );
   });
 }
-// Base URL for future weather forecast
-let forecastURL = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${APIKey}`;
 
-$.ajax({
-  url: forecastURL,
-  method: "GET",
-}).then(function (response) {
-  console.log(response);
-
-  // bootstrap syntax <div class="container"></div>;
-});
+// bootstrap syntax <div class="container"></div>;
 
 function search(event) {
   event.preventDefault();
   // Need to add user validation code here to ensure entries are not empty strings or duplicates and that they're proper city names
   let city = cityEl.val();
-  // Call method to validate city - get lat lon to check valid city
   console.log(city);
-  setLocationSearchHistory(city);
-  displaySearchHistory();
-  displayFutureForecast(city);
-  displayCurrentForecast(city);
+
+  // Call method to validate city - get lat lon to check valid city
+  if (isCityValid(city)) {
+    setLocationSearchHistory(city);
+    displaySearchHistory();
+    displayFutureForecast(city);
+    displayCurrentForecast(city);
+  } else {
+    //Tell user it's not valid
+  }
+}
+
+function isCityValid(city) {
+  // is it not null or empty and is there a lat, lon? Return true or false
 }
 
 // Create button dynamically for each location in location array, set value, attribute and add class
@@ -131,6 +130,7 @@ function getLocationSearchHistory() {
   let storedLocationSearchHistory = JSON.parse(
     localStorage.getItem("locationArrayKey")
   );
+  console.log(storedLocationSearchHistory);
   if (storedLocationSearchHistory) {
     return storedLocationSearchHistory;
   } else {
@@ -141,7 +141,10 @@ function getLocationSearchHistory() {
 // function to add locations to search history
 function setLocationSearchHistory(location) {
   let storedLocationSearchHistory = getLocationSearchHistory();
-  // Add if logic to exclude entries that aren't cities or cities that have already been entered
+  if (storedLocationSearchHistory.includes(location)) {
+    console.log("existing city");
+    return;
+  }
   storedLocationSearchHistory.unshift(location);
   localStorage.setItem(
     "locationArrayKey",
@@ -168,7 +171,6 @@ function displayFutureForecast(city) {
   // Set ajax call for future forecast
   function getForecast(lat, lon) {
     let forecastURL = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${APIKey}`;
-    console.log(forecastURL);
     $.ajax({
       url: forecastURL,
       method: "GET",
@@ -186,7 +188,6 @@ function displayFutureForecast(city) {
           .addClass("day")
           .attr("id", `day-${[i]}`);
         let dateArrayIndex = +([i] * 8 + 4);
-        console.log(dateArrayIndex);
         let date = moment
           .unix(response.list[dateArrayIndex].dt)
           .format("DD/MM/yyyy");
@@ -226,7 +227,6 @@ $(document).on("click", ".location-btn", updateForecasts);
 
 function updateForecasts(event) {
   const city = $(event.target).attr("data-name");
-  console.log(city);
   cityEl.val(city);
   displayFutureForecast(city);
   displayCurrentForecast(city);

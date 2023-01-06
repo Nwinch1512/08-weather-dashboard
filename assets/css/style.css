@@ -24,3 +24,7 @@
   background-color: rgb(12, 12, 60);
   color: white;
 }
+
+.location-btn {
+  margin: 5px;
+}
