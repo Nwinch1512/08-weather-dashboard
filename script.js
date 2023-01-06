@@ -8,7 +8,7 @@ let searchBtn = $("#search-button");
 let todayForecastSec = $("#today");
 let futureForecastSec = $("#forecast");
 searchBtn.on("click", search);
-let city = cityEl.val();
+let city = cityEl.val().trim();
 // Need to convert city name into lat and lon value to make API call, and then pass lat and lon into base URL to get 5 day forecast
 
 // Hardcoded lat and lon for now but need to get this from API call response depending on user input
@@ -16,71 +16,75 @@ let lat = 52.68064;
 let lon = -1.8243991722405983;
 
 // Base URL for current weather forecast - hardcoded city for now but need to set based on user input
-let queryURL = `http://api.openweathermap.org/data/2.5/weather?q=Lichfield&appid=${APIKey}`;
+function displayCurrentForecast() {
+  $("#today").empty();
+  const locationTitleCurrent = $(this).attr("data-name");
+  console.log(locationTitleCurrent);
+  let queryURL = `http://api.openweathermap.org/data/2.5/weather?q=${locationTitleCurrent}&appid=${APIKey}`;
 
-$.ajax({
-  url: queryURL,
-  method: "GET",
-}).then(function (response) {
-  console.log(response);
-  // Converting temp from kelvine to degrees celsius
-  let tempInCelsius = (response.main.temp - 273.15).toFixed(2);
-  console.log(
-    `You are in ${response.name}, the temperature is ${tempInCelsius} degrees celsius`
-  );
-  // Setting up elements for current weather forecast
-  let todayForecastDiv = $("<div>");
-  todayForecastDiv.attr("id", "today-forecast-div");
-  let headerEl = $("<h1>");
-  let weatherImg = $("<img>");
-  let weatherListEl = $("<ul>");
-  weatherListEl.addClass("weather-list-items");
+  $.ajax({
+    url: queryURL,
+    method: "GET",
+  }).then(function (response) {
+    console.log(response);
+    // Converting temp from kelvine to degrees celsius
+    let tempInCelsius = (response.main.temp - 273.15).toFixed(2);
+    console.log(
+      `You are in ${response.name}, the temperature is ${tempInCelsius} degrees celsius`
+    );
+    // Setting up elements for current weather forecast
+    let todayForecastDiv = $("<div>");
+    todayForecastDiv.attr("id", "today-forecast-div");
+    let headerEl = $("<h1>");
+    let weatherImg = $("<img>");
+    let weatherListEl = $("<ul>");
+    weatherListEl.addClass("weather-list-items");
 
-  //Appending elements for current weather forecast
-  todayForecastSec.append(todayForecastDiv);
-  todayForecastDiv.append(headerEl);
-  todayForecastDiv.append(weatherListEl);
-  headerEl.append(weatherImg);
+    //Appending elements for current weather forecast
+    todayForecastSec.append(todayForecastDiv);
+    todayForecastDiv.append(headerEl);
+    todayForecastDiv.append(weatherListEl);
+    headerEl.append(weatherImg);
 
-  //Heading for current weather
-  let cityName = response.name;
-  let date = moment.unix(response.dt).format("DD/MM/yyyy");
-  let imageURL = `http://openweathermap.org/img/w/${response.weather[0].icon}.png`;
-  console.log(imageURL);
-  //Setting value for new HTML elements
-  weatherImg.attr("src", imageURL);
-  headerEl.text(cityName + " " + "(" + date + ")");
-  headerEl.append(weatherImg);
+    //Heading for current weather
+    let cityName = response.name;
+    let date = moment.unix(response.dt).format("DD/MM/yyyy");
+    let imageURL = `http://openweathermap.org/img/w/${response.weather[0].icon}.png`;
+    console.log(imageURL);
+    //Setting value for new HTML elements
+    weatherImg.attr("src", imageURL);
+    headerEl.text(cityName + " " + "(" + date + ")");
+    headerEl.append(weatherImg);
 
-  let weatherIcon = response.weather[0].icon;
-  // main.temp //temperature
-  let temp = response.main.temp;
-  //wind.speed //wind speed
-  // main.humidity //humidity
-  let humidity = response.main.humidity;
-  let windSpeed = response.wind.speed;
+    let weatherIcon = response.weather[0].icon;
+    // main.temp //temperature
+    let temp = response.main.temp;
+    //wind.speed //wind speed
+    // main.humidity //humidity
+    let humidity = response.main.humidity;
+    let windSpeed = response.wind.speed;
 
-  let tempLi = $("<li>")
-    .addClass("current-weather-item")
-    .text(`Temp: ${tempInCelsius} ℃`);
-  let windLi = $("<li>")
-    .addClass("current-weather-item")
-    .text(`Wind: ${windSpeed} KPH`);
-  let humdityLi = $("<li>")
-    .addClass("current-weather-item")
-    .text(`Humidity: ${humidity}%`);
-  weatherListEl.append(tempLi, windLi, humdityLi);
+    let tempLi = $("<li>")
+      .addClass("current-weather-item")
+      .text(`Temp: ${tempInCelsius} ℃`);
+    let windLi = $("<li>")
+      .addClass("current-weather-item")
+      .text(`Wind: ${windSpeed} KPH`);
+    let humdityLi = $("<li>")
+      .addClass("current-weather-item")
+      .text(`Humidity: ${humidity}%`);
+    weatherListEl.append(tempLi, windLi, humdityLi);
 
-  console.log(
-    "city name:" + cityName,
-    "\n" + "date:" + date,
-    // "\n" + "icon:" + icon,
-    "\n" + "temp:" + tempInCelsius + "℃",
-    "\n" + "humidity:" + humidity + "%",
-    "\n" + "wind-speed:" + windSpeed + " KPH"
-  );
-});
-
+    console.log(
+      "city name:" + cityName,
+      "\n" + "date:" + date,
+      // "\n" + "icon:" + icon,
+      "\n" + "temp:" + tempInCelsius + "℃",
+      "\n" + "humidity:" + humidity + "%",
+      "\n" + "wind-speed:" + windSpeed + " KPH"
+    );
+  });
+}
 // Base URL for future weather forecast
 let forecastURL = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${APIKey}`;
 
@@ -210,7 +214,12 @@ function displayFutureForecast() {
 }
 
 // Need to update location for current weather when button clicked
+$(document).on("click", ".location-btn", displayCurrentForecast);
 $(document).on("click", ".location-btn", displayFutureForecast);
+
+// function updateForecasts(event) {
+//   displayFutureForecast(), displayCurrentForecast();
+// }
 
 // Set up search history cities as array in local storage.  Create button element for each city shown and add event listener which displays 5 day forecast for that city.
 
