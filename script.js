@@ -130,19 +130,6 @@ function isCityValid(city) {
   });
 }
 
-// function isCityValid(city) {
-//   // is it not null or empty and is there a lat, lon? Return true or false
-//   // if (city !== "" && city !== null && lat && lon) {
-//   // if (lat && lon) {
-//   //   console.log(true);
-//   //   return true;
-//   // } else {
-//   //   console.log(false);
-//   //   return false;
-//   // }
-//   console.log(getCoords(city));
-// }
-
 // Create button dynamically for each location in location array, set value, attribute and add class
 function displaySearchHistory() {
   let historyDiv = $("#history");

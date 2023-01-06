@@ -52,3 +52,15 @@
   border-top: 1px solid grey;
   padding-top: 20px;
 }
+
+.input-group {
+  width: 100% !important;
+  display: block;
+}
+
+.search-button,
+.form-input {
+  width: 100%;
+  display: block;
+  margin-bottom: 10px;
+}
