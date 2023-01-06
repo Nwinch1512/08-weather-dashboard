@@ -192,6 +192,9 @@ function displayFutureForecast() {
         .text("5-Day Forecast:")
         .addClass("forecast-heading");
       futureForecastSec.append(heading);
+      let dayContainer = $("<div>");
+      dayContainer.addClass("day-container");
+      futureForecastSec.append(dayContainer);
       for (let i = 0; i < 5; i++) {
         let day = $("<div>")
           .addClass("day")
@@ -207,7 +210,7 @@ function displayFutureForecast() {
         let weatherImg = $("<img>").attr("id", `img-day-${[i]}`);
         let weatherListEl = $("<ul>").attr("id", `weather-list-${[i]}`);
         weatherListEl.addClass("weather-list-items");
-        futureForecastSec.append(day);
+        dayContainer.append(day);
 
         day.append(dateEl);
         day.append(weatherImg);
@@ -218,8 +221,12 @@ function displayFutureForecast() {
         let tempEl = $("<li>")
           .attr("id", `temp-${[i]}`)
           .text(`Temp: ${tempInCelsius} ℃`);
-        let windEl = $("<li>").attr("id", `wind-${[i]}`);
-        let humidityEl = $("<li>").attr("id", `humidity-${[i]}`);
+        let windEl = $("<li>")
+          .attr("id", `wind-${[i]}`)
+          .text(`Wind: ${response.list[dateArrayIndex].wind.speed} KPH`);
+        let humidityEl = $("<li>")
+          .attr("id", `humidity-${[i]}`)
+          .text(`Humidity: ${response.list[dateArrayIndex].main.humidity}%`);
         weatherListEl.append(tempEl, windEl, humidityEl);
       }
       // let day2 = $("<div>").attr("id", "day-2");
