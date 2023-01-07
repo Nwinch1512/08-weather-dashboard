@@ -207,7 +207,7 @@ function displayFutureForecast(city) {
       futureForecastSec.append(forecastContainer);
       for (let i = 0; i < 5; i++) {
         let day = $("<div>")
-          .addClass("day card col-lg-2 col-md-2.4 col-sm-6")
+          .addClass("day card col-lg-2 col-md-2.4 col-sm-6 text-center")
           .attr("id", `day-${[i]}`);
         let dateArrayIndex = +([i] * 8 + 4);
         let date = moment
@@ -218,7 +218,8 @@ function displayFutureForecast(city) {
           .text(date);
         let weatherImg = $("<img>")
           .attr("id", `img-day-${[i]}`)
-          .attr("width", "50%");
+          .attr("width", "50%")
+          .css("margin", "auto");
         let forecastImageURL = `http://openweathermap.org/img/w/${response.list[dateArrayIndex].weather[0].icon}.png`;
         weatherImg.attr("src", forecastImageURL);
         let weatherListEl = $("<ul>").attr("id", `weather-list-${[i]}`);

@@ -36,10 +36,6 @@
   margin-bottom: 10px;
 }
 
-/* #img-day {
-  width: 50px !important;
-} */
-
 .location-btn {
   margin: 5px;
 }
@@ -79,4 +75,10 @@
   width: 100%;
   display: block;
   margin-bottom: 10px;
+}
+
+@media screen and (min-width: 360px) {
+  .card {
+    text-align: center;
+  }
 }
