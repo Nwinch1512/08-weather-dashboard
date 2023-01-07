@@ -206,11 +206,8 @@ function displayFutureForecast(city) {
       forecastContainer.addClass("forecast-container row");
       futureForecastSec.append(forecastContainer);
       for (let i = 0; i < 5; i++) {
-        let dayContainer = $("<div>").addClass(
-          "cardContainer col-lg-2 col-md-2.4 col-sm-6"
-        );
         let day = $("<div>")
-          .addClass("day card")
+          .addClass("day card col-lg-2 col-md-2.4 col-sm-6")
           .attr("id", `day-${[i]}`);
         let dateArrayIndex = +([i] * 8 + 4);
         let date = moment
@@ -226,8 +223,7 @@ function displayFutureForecast(city) {
         weatherImg.attr("src", forecastImageURL);
         let weatherListEl = $("<ul>").attr("id", `weather-list-${[i]}`);
         weatherListEl.addClass("weather-list-items");
-        forecastContainer.append(dayContainer);
-        dayContainer.append(day);
+        forecastContainer.append(day);
 
         day.append(dateEl);
         day.append(weatherImg);
