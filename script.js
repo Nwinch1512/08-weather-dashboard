@@ -202,10 +202,13 @@ function displayFutureForecast(city) {
         .text("5-Day Forecast:")
         .addClass("forecast-heading");
       futureForecastSec.append(heading);
-      let dayContainer = $("<div>");
-      dayContainer.addClass("day-container");
-      futureForecastSec.append(dayContainer);
+      let forecastContainer = $("<div>");
+      forecastContainer.addClass("forecast-container row");
+      futureForecastSec.append(forecastContainer);
       for (let i = 0; i < 5; i++) {
+        let dayContainer = $("<div>").addClass(
+          "cardContainer col-lg-2 col-md-2.4 col-sm-6"
+        );
         let day = $("<div>")
           .addClass("day card")
           .attr("id", `day-${[i]}`);
@@ -213,14 +216,17 @@ function displayFutureForecast(city) {
         let date = moment
           .unix(response.list[dateArrayIndex].dt)
           .format("DD/MM/yyyy");
-        let dateEl = $("<h4>")
+        let dateEl = $("<h5>")
           .attr("id", `date-${[i]}`)
           .text(date);
-        let weatherImg = $("<img>").attr("id", `img-day-${[i]}`);
+        let weatherImg = $("<img>")
+          .attr("id", `img-day-${[i]}`)
+          .attr("width", "50%");
         let forecastImageURL = `http://openweathermap.org/img/w/${response.list[dateArrayIndex].weather[0].icon}.png`;
         weatherImg.attr("src", forecastImageURL);
         let weatherListEl = $("<ul>").attr("id", `weather-list-${[i]}`);
         weatherListEl.addClass("weather-list-items");
+        forecastContainer.append(dayContainer);
         dayContainer.append(day);
 
         day.append(dateEl);

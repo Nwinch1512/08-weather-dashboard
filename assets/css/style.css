@@ -1,3 +1,7 @@
+* {
+  box-sizing: border-box;
+}
+
 /* Removing bullets from ul */
 .weather-list-items {
   list-style: none;
@@ -14,16 +18,25 @@
   display: block;
 }
 
-.day-container {
-  display: flex;
+.forecast-container {
+  /* display: flex; */
   justify-content: space-between;
+}
+.card {
+  height: 95%;
+  font-size: 1rem;
 }
 
 .day {
   padding: 20px;
   background-color: rgba(3, 22, 31, 0.585);
   color: white;
+  margin-bottom: 10px;
 }
+
+/* #img-day {
+  width: 50px !important;
+} */
 
 .location-btn {
   margin: 5px;
