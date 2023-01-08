@@ -12,6 +12,7 @@
 #today-forecast-div {
   border: 1px solid black;
   padding: 20px;
+  line-height: 2rem;
 }
 
 .forecast-heading {
@@ -36,6 +37,7 @@
   margin-bottom: 10px;
   border-radius: 0%;
   /* text-align: left !important; */
+  line-height: 2rem;
 }
 
 .location-btn {
