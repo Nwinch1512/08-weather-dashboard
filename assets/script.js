@@ -15,7 +15,7 @@ let city = cityEl.val().trim();
 function displayCurrentForecast(city) {
   $("#today").empty();
 
-  let queryURL = `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${APIKey}`;
+  let queryURL = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${APIKey}`;
 
   $.ajax({
     url: queryURL,
@@ -40,7 +40,7 @@ function displayCurrentForecast(city) {
     //Heading for current weather
     let cityName = response.name;
     let date = moment.unix(response.dt).format("DD/MM/yyyy");
-    let imageURL = `http://openweathermap.org/img/w/${response.weather[0].icon}.png`;
+    let imageURL = `https://openweathermap.org/img/w/${response.weather[0].icon}.png`;
     //Setting value for new HTML elements
     weatherImg
       .attr("src", imageURL)
@@ -191,7 +191,7 @@ function displayFutureForecast(city) {
             `${response.list[dateArrayIndex].weather[0].description}`
           )
           .css("margin", "auto");
-        let forecastImageURL = `http://openweathermap.org/img/w/${response.list[dateArrayIndex].weather[0].icon}.png`;
+        let forecastImageURL = `https://openweathermap.org/img/w/${response.list[dateArrayIndex].weather[0].icon}.png`;
         weatherImg.attr("src", forecastImageURL);
         let weatherListEl = $("<ul>").attr("id", `weather-list-${[i]}`);
         weatherListEl.addClass("weather-list-items");
