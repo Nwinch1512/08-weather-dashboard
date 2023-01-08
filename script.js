@@ -21,12 +21,8 @@ function displayCurrentForecast(city) {
     url: queryURL,
     method: "GET",
   }).then(function (response) {
-    console.log(response);
     // Converting temp from kelvine to degrees celsius
     let tempInCelsius = (response.main.temp - 273.15).toFixed(2);
-    console.log(
-      `You are in ${response.name}, the temperature is ${tempInCelsius} degrees celsius`
-    );
     // Setting up elements for current weather forecast
     let todayForecastDiv = $("<div>");
     todayForecastDiv.attr("id", "today-forecast-div");
@@ -73,9 +69,8 @@ function displayCurrentForecast(city) {
 function search(event) {
   event.preventDefault();
   let city = cityEl.val();
-  console.log(city);
 
-  let locationCoords = `https://api.openweathermap.org/geo/1.0/direct?q=${city},GB&appid=${APIKey}`;
+  let locationCoords = `https://api.openweathermap.org/geo/1.0/direct?q=${city}&appid=${APIKey}`;
   // Running ajax call to check that city entered is valid
   $.ajax({
     url: locationCoords,
@@ -94,7 +89,7 @@ function search(event) {
 }
 
 function isCityValid(city) {
-  let locationCoords = `https://api.openweathermap.org/geo/1.0/direct?q=${city},GB&appid=${APIKey}`;
+  let locationCoords = `https://api.openweathermap.org/geo/1.0/direct?q=${city}&appid=${APIKey}`;
 
   $.ajax({
     url: locationCoords,
@@ -102,10 +97,8 @@ function isCityValid(city) {
   }).then(function (response) {
     let responseLength = response.length;
     if (responseLength > 0) {
-      console.log("it's a city");
       return true;
     } else {
-      console.log("it's not a city");
       return false;
     }
   });
@@ -132,7 +125,6 @@ function getLocationSearchHistory() {
   let storedLocationSearchHistory = JSON.parse(
     localStorage.getItem("locationArrayKey")
   );
-  console.log(storedLocationSearchHistory);
   if (storedLocationSearchHistory) {
     return storedLocationSearchHistory;
   } else {
@@ -144,7 +136,6 @@ function getLocationSearchHistory() {
 function setLocationSearchHistory(location) {
   let storedLocationSearchHistory = getLocationSearchHistory();
   if (storedLocationSearchHistory.includes(location)) {
-    console.log("existing city");
     return;
   }
   storedLocationSearchHistory.unshift(location);
@@ -156,15 +147,12 @@ function setLocationSearchHistory(location) {
 
 function displayFutureForecast(city) {
   $("#forecast").empty();
-  // const locationTitle = $(event.target).attr("data-name");
-  // console.log(locationTitle);
-  let locationCoords = `https://api.openweathermap.org/geo/1.0/direct?q=${city},GB&appid=${APIKey}`;
+  let locationCoords = `https://api.openweathermap.org/geo/1.0/direct?q=${city}&appid=${APIKey}`;
 
   $.ajax({
     url: locationCoords,
     method: "GET",
   }).then(function (response) {
-    console.log(response);
     let lat = response[0].lat;
     let lon = response[0].lon;
     getForecast(lat, lon);
@@ -177,7 +165,6 @@ function displayFutureForecast(city) {
       url: forecastURL,
       method: "GET",
     }).then(function (response) {
-      console.log(response);
       let heading = $("<h3>")
         .text("5-Day Forecast:")
         .addClass("forecast-heading");
