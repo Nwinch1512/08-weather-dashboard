@@ -25,6 +25,7 @@ Please see below for a screenshot of the dashboard in desktop view.
 
 Please see below for screenshots of the dashboard in mobile view.
 ![Weather Dashboard webpage](/assets/Weather-dashboard-mobile-view.jpeg)
+
 ![Weather Dashboard webpage](/assets/Weather-dashboard-mobile-view-2.jpeg)
 
 Please refer to the link below to access the webpage:
