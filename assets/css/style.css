@@ -2,6 +2,15 @@
   box-sizing: border-box;
 }
 
+#form-heading {
+  padding: 6px;
+  font-weight: bold;
+}
+
+.form-group {
+  margin-bottom: 0px !important;
+}
+
 /* Removing bullets from ul */
 .weather-list-items {
   list-style: none;
@@ -63,9 +72,13 @@
   ) !important;
 }
 
-#history {
+/* #history {
   border-top: 1px solid grey;
   padding-top: 20px;
+} */
+
+.weather-hr {
+  border-color: rgba(0, 0, 0, 0.411) !important;
 }
 
 .input-group {
@@ -82,8 +95,8 @@
   border-radius: 5px !important;
 }
 
-@media screen and (min-width: 360px) {
-  .card {
-    /* text-align: center; */
-  }
+#search-input {
+  line-height: 1.5rem !important;
+  padding: 10px;
+  border: solid black 1px;
 }

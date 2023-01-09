@@ -45,7 +45,7 @@ function displayCurrentForecast(city) {
     weatherImg
       .attr("src", imageURL)
       .attr("alt", `${response.weather[0].description}`);
-    headerEl.text(cityName + " " + "(" + date + ")");
+    headerEl.text(cityName + " " + "(" + date + ")").css("font-weight", "bold");
     headerEl.append(weatherImg);
 
     let weatherIcon = response.weather[0].icon;
@@ -167,7 +167,8 @@ function displayFutureForecast(city) {
     }).then(function (response) {
       let heading = $("<h3>")
         .text("5-Day Forecast:")
-        .addClass("forecast-heading");
+        .addClass("forecast-heading")
+        .css("font-weight", "bold");
       futureForecastSec.append(heading);
       let forecastContainer = $("<div>");
       forecastContainer.addClass("forecast-container row");
