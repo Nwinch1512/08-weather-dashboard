@@ -21,7 +21,7 @@ function displayCurrentForecast(city) {
     url: queryURL,
     method: "GET",
   }).then(function (response) {
-    // Converting temp from kelvine to degrees celsius
+    // Converting temp from kelvin to degrees celsius
     let tempInCelsius = (response.main.temp - 273.15).toFixed(2);
     // Setting up elements for current weather forecast
     let todayForecastDiv = $("<div>");
@@ -41,7 +41,8 @@ function displayCurrentForecast(city) {
     let cityName = response.name;
     let date = moment.unix(response.dt).format("DD/MM/yyyy");
     let imageURL = `https://openweathermap.org/img/w/${response.weather[0].icon}.png`;
-    //Setting value for new HTML elements
+
+    //Setting values for new HTML elements
     weatherImg
       .attr("src", imageURL)
       .attr("alt", `${response.weather[0].description}`);
