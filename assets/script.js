@@ -1,4 +1,4 @@
-// $( document ).ready(function() {}
+// $( document ).ready(function() {}forecast
 
 let APIKey = "800568ca8ac1381d6a664d50c4c201ee";
 
@@ -83,6 +83,7 @@ function search(event) {
       displaySearchHistory();
       displayFutureForecast(city);
       displayCurrentForecast(city);
+      console.log(response);
     } else {
       alert("Please enter a valid city name.");
     }

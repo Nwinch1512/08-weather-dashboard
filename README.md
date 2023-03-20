@@ -21,7 +21,7 @@ N/A
 The weather dashboard allows users to retrieve weather forecasts by city for today and the next five days. This would be useful for anyone that needed to compare current and future weather conditions by city name. In particular, this would be useful to anyone planning a trip over the next few days to inform them of destinations which had weather conditions most suited to their needs.
 
 Please see below for a screenshot of the dashboard in desktop view.
-![Weather Dashboard webpage](/assets/Weather-dashboard-screenshot.jpeg)
+![Weather Dashboard webpage](/assets/Weather-dashboard-styled-desktop.jpeg)
 
 Please see below for screenshots of the dashboard in mobile view.
 ![Weather Dashboard webpage](/assets/Weather-dashboard-mobile-view.jpeg)
